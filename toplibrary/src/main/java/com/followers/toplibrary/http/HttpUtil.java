@@ -11,6 +11,7 @@ import com.followers.toplibrary.bean.CommBean;
 import com.followers.toplibrary.bean.ConfigBean;
 import com.followers.toplibrary.bean.FollowersMeBean;
 import com.followers.toplibrary.bean.FollowersPostBean;
+import com.followers.toplibrary.bean.FollowersPostListBean;
 import com.followers.toplibrary.bean.LikesMeBean;
 import com.followers.toplibrary.bean.LikesPostBean;
 import com.followers.toplibrary.bean.LoginBean;
@@ -865,7 +866,7 @@ public class HttpUtil {
 
 
     //发布过的粉丝帖子
-    public static void followersPostList(String user_pk,final HttpListener<String> listener) {
+    public static void followersPostList(String user_pk,final HttpListener<FollowersPostListBean> listener) {
 
         Map<String, Object> map = new HashMap<>();
 
@@ -877,6 +878,12 @@ public class HttpUtil {
             @Override
             public void success(String s) {
 
+                FollowersPostListBean followersPostListBean = GsonUtil.format(s,FollowersPostListBean.class);
+
+                if(null != followersPostListBean){
+
+                    listener.onSuccess(followersPostListBean);
+                }
 
             }
 
