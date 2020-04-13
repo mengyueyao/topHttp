@@ -439,4 +439,23 @@ public class HttpRequest extends ObjectLoader {
     }
 
 
+    /**
+     *
+     * 发布过的关注帖子
+     * @return
+     */
+
+    public Observable<JsonElement> followersPostList(Map<String,Object> map){
+
+        return observable(httpService.followersPostList(map)).map(new Func1<JsonElement,JsonElement>() {
+            @Override
+            public JsonElement call(JsonElement s) {
+
+
+                return s;
+            }
+        });
+    }
+
+
 }

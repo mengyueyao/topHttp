@@ -864,6 +864,32 @@ public class HttpUtil {
     }
 
 
+    //发布过的粉丝帖子
+    public static void followersPostList(String user_pk,final HttpListener<String> listener) {
+
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("user_pk",user_pk);
+
+        Observable observable = new HttpRequest().followersPostList(map);
+
+        new RequestManager() {
+            @Override
+            public void success(String s) {
+
+
+            }
+
+            @Override
+            public void failure(String e) {
+
+                listener.onError(e);
+            }
+
+        }.post(observable);
+    }
+
+
 
 }
 

@@ -33,16 +33,16 @@ public abstract class RequestManager  {
 
                     try {
 
+                        if(Utils.isDebug()){
+
+                            Log.e("exception:",throwable.getMessage());
+                        }
+
                         ResponseBody responseBody = ((HttpException) throwable).response().errorBody();
 
                         int code = ((HttpException) throwable).code();
 
                         throwable.printStackTrace();
-
-                        if(Utils.isDebug()){
-
-                            Log.e("error","code:"+code+",msg:"+throwable.toString());
-                        }
 
                         failure("code:"+code+",msg:"+responseBody.string());
 
