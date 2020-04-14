@@ -16,6 +16,7 @@ import com.followers.toplibrary.bean.LikesMeBean;
 import com.followers.toplibrary.bean.LikesPostBean;
 import com.followers.toplibrary.bean.LoginBean;
 import com.followers.toplibrary.bean.PayCallBackBean;
+import com.followers.toplibrary.bean.RankFollowersBean;
 import com.followers.toplibrary.bean.RankingLikesBean;
 import com.followers.toplibrary.bean.SendLikesPostBean;
 import com.followers.toplibrary.bean.TopFollowersPostBean;
@@ -842,7 +843,7 @@ public class HttpUtil {
 
 
     //获得粉丝排行榜
-    public static void rankingFollowersList(final HttpListener<String> listener) {
+    public static void rankingFollowersList(final HttpListener<RankFollowersBean> listener) {
 
         Map<String, Object> map = new HashMap<>();
 
@@ -852,6 +853,12 @@ public class HttpUtil {
             @Override
             public void success(String s) {
 
+                RankFollowersBean rankFollowersBean = GsonUtil.format(s,RankFollowersBean.class);
+
+                if(null != rankFollowersBean){
+
+                    listener.onSuccess(rankFollowersBean);
+                }
 
             }
 
