@@ -1,8 +1,9 @@
 package com.followers.toplibrary.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class CoinsBean {
+public class CoinsBean implements Serializable {
 
 
     /**
@@ -49,7 +50,7 @@ public class CoinsBean {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable{
         /**
          * id : 6
          * created_at : 2019-07-26T11:55:32+08:00
