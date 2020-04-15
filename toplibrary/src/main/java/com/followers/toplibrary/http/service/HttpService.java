@@ -32,7 +32,7 @@ public interface HttpService {
 
     //上传图片
     @Multipart
-    @POST("admin/upload_img")
+    @POST("ins/upload_img")
     Observable<ResponseBody> upLoadImage(@Part MultipartBody.Part file);
 
     //获取金币列表
@@ -114,6 +114,17 @@ public interface HttpService {
     //发布过的关注帖子
     @POST("followers/publish_list")
     Observable<JsonElement> followersPostList(@Body Map<String, Object> map);
+
+
+    //查询用户评分状态
+    @POST("ad/rate_status")
+    Observable<JsonElement> rateStatus(@Body Map<String, Object> map);
+
+
+    //应用评分
+    @POST("ad/rate")
+    Observable<JsonElement> rate(@Body Map<String, Object> map);
+
 
 
 }

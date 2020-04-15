@@ -458,4 +458,42 @@ public class HttpRequest extends ObjectLoader {
     }
 
 
+    /**
+     *
+     * 用户是否可以好评
+     * @return
+     */
+
+    public Observable<JsonElement> rateStatus(Map<String,Object> map){
+
+        return observable(httpService.rateStatus(map)).map(new Func1<JsonElement,JsonElement>() {
+            @Override
+            public JsonElement call(JsonElement s) {
+
+
+                return s;
+            }
+        });
+    }
+
+
+    /**
+     *
+     * 好评加金币
+     * @return
+     */
+
+    public Observable<JsonElement> rate(Map<String,Object> map){
+
+        return observable(httpService.rate(map)).map(new Func1<JsonElement,JsonElement>() {
+            @Override
+            public JsonElement call(JsonElement s) {
+
+
+                return s;
+            }
+        });
+    }
+
+
 }

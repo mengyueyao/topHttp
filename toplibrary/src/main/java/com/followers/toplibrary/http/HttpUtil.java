@@ -18,6 +18,8 @@ import com.followers.toplibrary.bean.LoginBean;
 import com.followers.toplibrary.bean.PayCallBackBean;
 import com.followers.toplibrary.bean.RankFollowersBean;
 import com.followers.toplibrary.bean.RankingLikesBean;
+import com.followers.toplibrary.bean.RateBean;
+import com.followers.toplibrary.bean.RateStatusBean;
 import com.followers.toplibrary.bean.SendLikesPostBean;
 import com.followers.toplibrary.bean.TopFollowersPostBean;
 import com.followers.toplibrary.bean.TopLikesBean;
@@ -32,6 +34,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import mobile.Mobile;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -131,7 +134,7 @@ public class HttpUtil {
 
 
     //上传图片
-    public static void uploadImage(final Context context, final String imageUrl , final HttpListener<String> listener) {
+    public static void uploadImage(final Context context, final String imageUrl , final HttpListener<CommBean> listener) {
 
         new Thread(new Runnable() {
             @Override
@@ -145,11 +148,18 @@ public class HttpUtil {
                             .get();
                     //上传图片需要MultipartBody
                     RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpg"), file);
-                    MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
+                    MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName()+".jpg", requestBody);
                     RetrofitUtils.getInstance().upLoadImage(body).setHttpListener(new RetrofitUtils.HttpListener() {
                         @Override
                         public void onSuccess(String jsonStr) {
-                            listener.onSuccess(jsonStr);
+
+                            CommBean commBean = GsonUtil.format(Mobile.decrypt(jsonStr),CommBean.class);
+
+                            if(null != commBean){
+
+                                listener.onSuccess(commBean);
+                            }
+
                         }
 
                         @Override
@@ -902,6 +912,74 @@ public class HttpUtil {
 
         }.post(observable);
     }
+
+
+
+    //用户是否可以好评
+    public static void rateStatus(String user_pk,final HttpListener<Boolean> listener) {
+
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("user_pk",user_pk);
+
+        Observable observable = new HttpRequest().rateStatus(map);
+
+        new RequestManager() {
+            @Override
+            public void success(String s) {
+
+               RateStatusBean rateStatusBean =  GsonUtil.format(s,RateStatusBean.class);
+
+               if(null != rateStatusBean){
+
+                   listener.onSuccess(rateStatusBean.isStatus());
+               }
+            }
+
+            @Override
+            public void failure(String e) {
+
+                listener.onError(e);
+            }
+
+        }.post(observable);
+    }
+
+
+
+
+    //好评加金币
+    public static void rate(String user_pk,final HttpListener<Boolean> listener) {
+
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("user_pk",user_pk);
+
+        Observable observable = new HttpRequest().rate(map);
+
+        new RequestManager() {
+            @Override
+            public void success(String s) {
+
+                RateBean rateBean = GsonUtil.format(s,RateBean.class);
+
+                if(null != rateBean){
+
+                    listener.onSuccess(rateBean.isStatus());
+                }
+
+            }
+
+            @Override
+            public void failure(String e) {
+
+                listener.onError(e);
+            }
+
+        }.post(observable);
+    }
+
+
 
 
 
