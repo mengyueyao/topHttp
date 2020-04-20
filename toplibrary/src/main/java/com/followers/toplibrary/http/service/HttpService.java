@@ -125,6 +125,12 @@ public interface HttpService {
     @POST("ad/rate")
     Observable<JsonElement> rate(@Body Map<String, Object> map);
 
+    //积分墙奖励金币
+    @POST("ad/query_reward_coins")
+    Observable<JsonElement> rewardCoins(@Body Map<String, Object> map);
+
+
+
 
 
 }

@@ -20,6 +20,7 @@ import com.followers.toplibrary.bean.RankFollowersBean;
 import com.followers.toplibrary.bean.RankingLikesBean;
 import com.followers.toplibrary.bean.RateBean;
 import com.followers.toplibrary.bean.RateStatusBean;
+import com.followers.toplibrary.bean.RewardBean;
 import com.followers.toplibrary.bean.SendLikesPostBean;
 import com.followers.toplibrary.bean.TopFollowersPostBean;
 import com.followers.toplibrary.bean.TopLikesBean;
@@ -966,6 +967,44 @@ public class HttpUtil {
                 if(null != rateBean){
 
                     listener.onSuccess(rateBean.isStatus());
+                }
+
+            }
+
+            @Override
+            public void failure(String e) {
+
+                listener.onError(e);
+            }
+
+        }.post(observable);
+    }
+
+
+
+
+    //积分墙加金币
+    public static void rewardCoins(String user_pk,String start_time,String end_time,final HttpListener<Integer> listener) {
+
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("user_pk",user_pk);
+
+        map.put("start_time",start_time);
+
+        map.put("end_time",end_time);
+
+        Observable observable = new HttpRequest().rewardCoins(map);
+
+        new RequestManager() {
+            @Override
+            public void success(String s) {
+
+                RewardBean rewardBean = GsonUtil.format(s,RewardBean.class);
+
+                if(null != rewardBean){
+
+                    listener.onSuccess(rewardBean.getData());
                 }
 
             }

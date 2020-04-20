@@ -496,4 +496,23 @@ public class HttpRequest extends ObjectLoader {
     }
 
 
+    /**
+     *
+     * 积分墙加金币
+     * @return
+     */
+
+    public Observable<JsonElement> rewardCoins(Map<String,Object> map){
+
+        return observable(httpService.rewardCoins(map)).map(new Func1<JsonElement,JsonElement>() {
+            @Override
+            public JsonElement call(JsonElement s) {
+
+
+                return s;
+            }
+        });
+    }
+
+
 }
