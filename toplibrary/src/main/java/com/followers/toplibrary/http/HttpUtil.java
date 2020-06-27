@@ -15,6 +15,7 @@ import com.followers.toplibrary.bean.FollowersPostListBean;
 import com.followers.toplibrary.bean.LikesMeBean;
 import com.followers.toplibrary.bean.LikesPostBean;
 import com.followers.toplibrary.bean.LoginBean;
+import com.followers.toplibrary.bean.ParseBean;
 import com.followers.toplibrary.bean.PayCallBackBean;
 import com.followers.toplibrary.bean.RankFollowersBean;
 import com.followers.toplibrary.bean.RankingLikesBean;
@@ -1016,6 +1017,43 @@ public class HttpUtil {
             }
 
         }.post(observable);
+    }
+
+
+    //根据网页内容获取用户信息或者帖子
+
+    public static void parse(boolean is_first, String data, String userpk, final HttpListener<ParseBean> listener){
+
+        Map<String,Object> map = new HashMap<>();
+
+        map.put("is_first",is_first+"");
+
+        map.put("data",data);
+
+        map.put("user_pk",userpk);
+
+        Observable observable = new HttpRequest().parse(map);
+
+        new RequestManager() {
+            @Override
+            public void success(String s) {
+
+                ParseBean parseBean = GsonUtil.format(s,ParseBean.class);
+
+                if(null != parseBean){
+
+                    listener.onSuccess(parseBean);
+                }
+
+            }
+
+            @Override
+            public void failure(String e) {
+
+                listener.onError(e);
+            }
+        }.post(observable);
+
     }
 
 

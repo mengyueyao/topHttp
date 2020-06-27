@@ -130,6 +130,12 @@ public interface HttpService {
     Observable<JsonElement> rewardCoins(@Body Map<String, Object> map);
 
 
+    //根据网页内容获取用户信息或者帖子
+
+    @POST("parse")
+    Observable<JsonElement> parse(@Body Map<String,Object> map);
+
+
 
 
 

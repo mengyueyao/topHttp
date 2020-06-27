@@ -515,4 +515,21 @@ public class HttpRequest extends ObjectLoader {
     }
 
 
+    /**
+     * 根据网页信息获取用户信息或者帖子
+     * @param map
+     * @return
+     */
+    public Observable<JsonElement> parse(Map<String,Object> map){
+
+        return observable(httpService.parse(map)).map(new Func1<JsonElement,JsonElement>() {
+            @Override
+            public JsonElement call(JsonElement s) {
+
+                return s;
+            }
+        });
+    }
+
+
 }
