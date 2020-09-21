@@ -308,7 +308,7 @@ public class HttpUtil {
 
 
     //发布点赞的帖子
-    public static void sendLikesPost(String user_pk,String user_name,String url,String img,String remark,boolean is_top,final HttpListener<Integer> listener) {
+    public static void sendLikesPost(String user_pk,String user_name,String url,String img,String remark,boolean is_top,String article_id,final HttpListener<Integer> listener) {
 
         Map<String, Object> map = new HashMap<>();
         map.put("user_pk",user_pk);
@@ -316,6 +316,7 @@ public class HttpUtil {
         map.put("url",url); //跳转的url
         map.put("img",img); //图片地址
         map.put("remark",remark);
+        map.put("article_id",article_id);
         if(is_top){
 
             map.put("is_top","1");
@@ -601,7 +602,7 @@ public class HttpUtil {
 
 
     //发布关注帖子
-    public static void sendFollowersPost(String user_pk,String user_name,String url,String img,String remark,boolean is_top,final HttpListener<Integer> listener) {
+    public static void sendFollowersPost(String user_pk,String user_name,String url,String img,String remark,boolean is_top,String article_id,final HttpListener<Integer> listener) {
 
         Map<String, Object> map = new HashMap<>();
 
@@ -612,6 +613,8 @@ public class HttpUtil {
         map.put("url",url);
 
         map.put("img",img);
+
+        map.put("article_id",article_id);
 
         map.put("remark",remark);
 
